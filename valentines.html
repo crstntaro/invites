@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Will You Be My Valentine?</title>
+    <!-- Google Font for a modern look -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Global Styles */
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        /* A soft, romantic gradient background */
+        background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+        font-family: "Montserrat", sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+      .container {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        max-width: 600px;
+      }
+      h1 {
+        font-size: 2rem;
+        color: #333;
+        margin-bottom: 20px;
+      }
+      /* Flex container to display message next to the dog */
+      .message-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+      .message-text {
+        max-width: 280px;
+        text-align: left;
+        font-size: 1rem;
+        color: #555;
+        line-height: 1.5;
+      }
+      button {
+        background-color: #d35400;
+        color: #fff;
+        border: none;
+        padding: 12px 24px;
+        font-size: 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin: 5px;
+      }
+      button:hover {
+        background-color: #ba4a00;
+      }
+
+      /* Dog Container */
+      .dog-container {
+        position: relative;
+        display: inline-block;
+      }
+      /* SVG dog styling */
+      #dog {
+        width: 200px;
+        height: auto;
+      }
+      /* Cheer animation on the dog when button is clicked */
+      @keyframes cheerAnimation {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      #dog.cheer {
+        animation: cheerAnimation 0.6s ease-out;
+      }
+
+      /* Popup for sweet message */
+      .popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        background-color: rgba(255, 255, 255, 0.95);
+        padding: 20px 30px;
+        border: 2px solid #d35400;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        transition: transform 0.5s ease, opacity 0.5s ease;
+        z-index: 1000;
+      }
+      .popup.show {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Will You Be My Valentine?</h1>
+      <!-- Message and Dog placed side by side -->
+      <div class="message-container">
+        <div class="message-text">
+          <p>
+            Hey, bb! This is going to be our first valentines together! Ultimately
+            I had so much lined up na plans for us to spend the valentines !! But
+            before that !!!! may i, ur bb formally ask you to be my valentines? pls
+            say yes :(
+          </p>
+          <p>here is a dog, bb so u have to say yes! :P</p>
+        </div>
+        <div class="dog-container">
+          <!-- Dog SVG with interactive eyes -->
+          <svg id="dog" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <!-- Head circle -->
+            <circle
+              cx="100"
+              cy="100"
+              r="80"
+              fill="#F5CBA7"
+              stroke="#D35400"
+              stroke-width="4"
+            />
+            <!-- Left ear -->
+            <ellipse
+              cx="50"
+              cy="50"
+              rx="20"
+              ry="30"
+              fill="#F5CBA7"
+              stroke="#D35400"
+              stroke-width="3"
+            />
+            <!-- Right ear -->
+            <ellipse
+              cx="150"
+              cy="50"
+              rx="20"
+              ry="30"
+              fill="#F5CBA7"
+              stroke="#D35400"
+              stroke-width="3"
+            />
+            <!-- Left eye socket -->
+            <circle
+              cx="70"
+              cy="90"
+              r="10"
+              fill="#fff"
+              stroke="#333"
+              stroke-width="1"
+            />
+            <!-- Left pupil -->
+            <circle id="left-pupil" cx="70" cy="90" r="4" fill="#333" />
+            <!-- Right eye socket -->
+            <circle
+              cx="130"
+              cy="90"
+              r="10"
+              fill="#fff"
+              stroke="#333"
+              stroke-width="1"
+            />
+            <!-- Right pupil -->
+            <circle id="right-pupil" cx="130" cy="90" r="4" fill="#333" />
+            <!-- Nose -->
+            <polygon
+              points="100,110 85,135 115,135"
+              fill="#D35400"
+            />
+            <!-- Mouth -->
+            <path
+              d="M85,140 Q100,155 115,140"
+              stroke="#D35400"
+              stroke-width="3"
+              fill="none"
+              stroke-linecap="round"
+            />
+          </svg>
+        </div>
+      </div>
+      <button id="yesBtn">Yes, I’d love to!</button>
+      <button id="noBtn">No</button>
+    </div>
+
+    <!-- Popup for sweet message -->
+    <div id="popup" class="popup">
+      <p>YEYYYYY, I CAN'T WAITTT. SEE YOU THEN I LOVE YOU MY FRANCES MWA ! &lt;3</p>
+    </div>
+
+    <!-- Canvas Confetti library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+      // Make the dog's pupils follow the cursor.
+      document.addEventListener("mousemove", function (e) {
+        const svg = document.getElementById("dog");
+        const svgRect = svg.getBoundingClientRect();
+        // Convert mouse coordinates to SVG space.
+        const mouseX = e.clientX - svgRect.left;
+        const mouseY = e.clientY - svgRect.top;
+
+        // Update left pupil (its original center is at 70,90)
+        const leftPupil = document.getElementById("left-pupil");
+        updatePupil(leftPupil, 70, 90, mouseX, mouseY);
+
+        // Update right pupil (its original center is at 130,90)
+        const rightPupil = document.getElementById("right-pupil");
+        updatePupil(rightPupil, 130, 90, mouseX, mouseY);
+      });
+
+      function updatePupil(pupil, centerX, centerY, mouseX, mouseY) {
+        const dx = mouseX - centerX;
+        const dy = mouseY - centerY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        const maxOffset = 3; // Maximum movement for the pupil.
+        let offsetX = 0;
+        let offsetY = 0;
+        if (distance > 0) {
+          const clampedDistance = Math.min(distance, maxOffset);
+          offsetX = (dx / distance) * clampedDistance;
+          offsetY = (dy / distance) * clampedDistance;
+        }
+        pupil.setAttribute("transform", `translate(${offsetX}, ${offsetY})`);
+      }
+
+      // Cheer animation, fireworks, and popup on Yes button click.
+      document.getElementById("yesBtn").addEventListener("click", function () {
+        const dog = document.getElementById("dog");
+        dog.classList.add("cheer");
+        setTimeout(() => {
+          dog.classList.remove("cheer");
+        }, 600);
+
+        // Trigger fireworks (confetti)
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+
+        // Show the sweet popup message.
+        const popup = document.getElementById("popup");
+        popup.classList.add("show");
+        setTimeout(() => {
+          popup.classList.remove("show");
+        }, 3000);
+      });
+
+      // Elusive “No” button: Move it randomly when hovered.
+      document.getElementById("noBtn").addEventListener("mouseenter", function () {
+        const btn = this;
+        const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+        const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+        btn.style.position = "absolute";
+        btn.style.left = x + "px";
+        btn.style.top = y + "px";
+      });
+    </script>
+  </body>
+</html>
